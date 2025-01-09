@@ -11,7 +11,7 @@ int main()
     // }
     // close(a);
     printf("%s", get_next_line(a));
-//     printf("%s", get_next_line(a));
-//     printf("%s", get_next_line(a));
-//     printf("%s", get_next_line(a));
+    printf("%s", get_next_line(a));
+    printf("%s", get_next_line(a));
+    printf("%s", get_next_line(a));
 }

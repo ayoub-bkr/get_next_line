@@ -27,17 +27,36 @@ int check(char *buff)
     return (0);
 }
 
+char *append(char **line)
+{
+    char *returned_line;
+    int i;
+    int pause;
+
+    i = 0;
+    while((*line)[i])
+    {
+        if ((*line)[i] == '\n')
+            break;
+        i++;
+    }
+    returned_line  = ft_substr(*line, 0, i + 1);
+    pause = ft_strlen(*line) - i;
+    *line = ft_substr(*line, i + 1, pause);
+    return(returned_line);
+}
+
+
+
 char *get_next_line(int fd)
 {
     static char *line;
-    char *second_line;
-    int i;
-    char *buff;
     int len;
-    char *returned_line;
+    char *buff;
+    //char *returned_line;
+    char *second_line;
+    //int i = 0;
 
-    i = 0;
-    len = 0;
     buff = malloc(BUFFER_SIZE + 1);
     if (!buff)
         return (NULL);
@@ -50,23 +69,39 @@ char *get_next_line(int fd)
             line = ft_strjoin(second_line, buff);
             if (!line)
                 return (NULL);
-            while(line[i])
-            {
-                if (line[i] == '\n')
-                    break;
-                i++;
-            }
+            
+            // buff[len] = '\0';
+            // second_line = line;
+            // line = ft_strjoin(second_line, buff);
+            // if (!line)
+            //     return (NULL);
+            // returned_line = append(&line);
         }
         else
         {
-            free(buff);
-            return (line);
+            // while(line[i])
+            // {
+            //     if (line[i] == '\n')
+            //         break;
+            //     i++;
+            // }
+            // returned_line  = ft_substr(line, 0, i + 1);
+            // int pause = ft_strlen(line) - i;
+            // line = ft_substr(line, i + 1, pause);
+            // return (returned_line);
+            return (append(&line));
         }
     }
     free (buff);
-    returned_line  = ft_substr(line, 0, i + 1);
-    int pause = ft_strlen(line) - i;
-    line = ft_substr(line, i + 1, pause);
+    // while(line[i])
+    //         {
+    //             if (line[i] == '\n')
+    //                 break;
+    //             i++;
+    //         }
+    // returned_line  = ft_substr(line, 0, i + 1);
+    // int pause = ft_strlen(line) - i;
+    // line = ft_substr(line, i + 1, pause);
     // if (*line == '\0')
     // {
     //     free (line);
@@ -74,5 +109,5 @@ char *get_next_line(int fd)
     // }
     // printf("%s", returned_line);
     // printf("next: {%s}\n", line);
-    return (returned_line);
+    return (append(&line));
 }
