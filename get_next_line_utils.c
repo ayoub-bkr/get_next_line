@@ -6,7 +6,7 @@
 /*   By: aboukent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:41:25 by aboukent          #+#    #+#             */
-/*   Updated: 2024/12/15 11:41:27 by aboukent         ###   ########.fr       */
+/*   Updated: 2025/01/12 01:51:41 by aboukent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*ft_strdup(char *s)
 {
 	int		i;
 	char	*m;
-	// char	*str;
 
 	i = 0;
 	m = malloc(ft_strlen(s) + 1);
@@ -38,8 +37,6 @@ char	*ft_strdup(char *s)
 		i++;
 	}
 	*(m + i) = '\0';
-	// str = m;
-	//free(m);
 	return (m);
 }
 
@@ -48,7 +45,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		i;
 	int		j;
 	char	*m;
-	// char	*str;
 
 	i = 0;
 	j = 0;
@@ -67,9 +63,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[j])
 		m[i++] = s2[j++];
 	m[i] = '\0';
-	// free(s1);
-	// str = m;
-	//free(m);
 	return (m);
 }
 
@@ -77,7 +70,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	char	*m;
-	//char *str;
 
 	i = 0;
 	if (!s)
@@ -95,7 +87,5 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		i++;
 	}
 	m[i] = '\0';
-	// str = m;
-	// free(m);
 	return (m);
 }
