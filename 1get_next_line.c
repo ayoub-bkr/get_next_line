@@ -5,84 +5,92 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aboukent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 08:53:54 by aboukent          #+#    #+#             */
-/*   Updated: 2025/01/12 09:33:28 by aboukent         ###   ########.fr       */
+/*   Created: 2024/12/15 11:40:27 by aboukent          #+#    #+#             */
+/*   Updated: 2025/01/12 01:28:41 by aboukent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
-char	*before_nl(char *line)
-{
-	int	i;
-	char	*returned_line;
 
-	i = 0;
-	while (line[i] && line[i] != '\n')
-		i++;
-	if (line[i] == '\n')
-		returned_line = ft_substr(line, 0, i + 1);
-	else
-		returned_line = line;
-	return (returned_line);
+char	*clear(char *str)
+{
+	free(str);
+	return (NULL);
 }
 
-char	*after_nl(char *line)
+int	check(char *buff)
 {
 	int	i;
-	int	j;
-	char	*returned_line;
 
 	i = 0;
-	j = ft_strlen(line);
-	while (line[i] != '\n')
+	if (!buff)
+		return (0);
+	while (buff[i])
+	{
+		if (buff[i] == '\n')
+		{
+			// buff = clear(buff);
+			return (1);
+		}
 		i++;
-	if (line[i] == '\n')
-		returned_line = ft_substr(line, i + 1, j - i);
+	}
+	return (0);
+}
+
+char	*append(char **line)
+{
+	char	*returned_line;
+	char	*temp;
+	int		i;
+	int		pause;
+
+	i = 0;
+	while ((*line)[i])
+	{
+		if ((*line)[i] == '\n')
+			break ;
+		i++;
+	}
+	temp = *line;
+	returned_line = ft_substr(*line, 0, i + 1);
+	pause = ft_strlen(*line) - i;
+	*line = ft_substr(temp, i + 1, pause);
+	temp = clear(temp);
 	return (returned_line);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*line;
-	char		*buff;
-	char		*returned_line;
-	char		*temp;
 	int			len;
-	int			i;
+	char		*buff;
+	char		*temp;
 
-	i = 0;
 	buff = malloc(BUFFER_SIZE + 1);
 	if (!buff)
 		return (NULL);
-	len = 1;
-	while (!ft_strchr(line, '\n'))
+	while (check(buff) == 0)
 	{
+		len = read(fd, buff, BUFFER_SIZE);
 		if (len > 0)
 		{
-			len = read(fd, buff, BUFFER_SIZE);
-			// printf("%d\n", len);
 			buff[len] = '\0';
-			line = ft_strjoin(line, buff);
+			temp = line;
+			line = ft_strjoin(temp, buff);
+			temp = clear(temp);
+			if (!line)
+			{
+				buff = clear(buff);
+				return (NULL);
+			}
 		}
 		else
 		{
-			returned_line = line;
-			return (returned_line);
+			buff = clear(buff);
+			return (append(&line));
 		}
 	}
-	// free(buff);
-	
-	// temp = line;
-	
-	// while (line[i] && line[i] != '\n')
-	// 	i++;
-	
-	
-	// printf("/%s/", line);
-	// if (line[i] == '\n')
-	// 	free(temp);
-	returned_line = before_nl(line);
-	line = after_nl(line);
-	return (returned_line);
+	buff = clear(buff);
+	return (append(&line));
 }

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
+#include <stdio.h>
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
@@ -66,7 +66,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (m);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	char	*m;
@@ -88,4 +88,22 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	m[i] = '\0';
 	return (m);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	int				i;
+	char			*st;
+	unsigned char	ch;
+
+	if (s == NULL)
+		return (NULL);
+	i = 0;
+	st = (char *)s;
+	ch = (unsigned char)c;
+	while (st[i] && st[i] != ch)
+		i++;
+	if (st[i] == ch)
+		return (&st[i]);
+	return (NULL);
 }
