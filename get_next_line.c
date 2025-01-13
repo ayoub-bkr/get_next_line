@@ -71,14 +71,10 @@ char	*get_next_line(int fd)
 			return (returned_line);
 		}
 	}
-	// free(buff);
-	
-	// temp = line;
-	
+	free(buff);
+	temp = line;
 	// while (line[i] && line[i] != '\n')
 	// 	i++;
-	
-	
 	// printf("/%s/", line);
 	// if (line[i] == '\n')
 	// 	free(temp);

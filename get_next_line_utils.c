@@ -90,7 +90,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	return (m);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	int				i;
 	char			*st;
@@ -105,5 +105,6 @@ char	*ft_strchr(const char *s, int c)
 		i++;
 	if (st[i] == ch)
 		return (&st[i]);
+	free(s);
 	return (NULL);
 }

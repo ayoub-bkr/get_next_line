@@ -21,13 +21,6 @@ int	main(void)
 	a = open("text", O_RDONLY);
 	str = get_next_line(a);
 	printf("%s", str);
-	// free(str);
-	a = open("text", O_RDONLY);
-	str = get_next_line(a);
-	printf("%s", str);
-	// free(str);
-	str = get_next_line(a);
-	printf("%s", str);
-	// free(str);
+	free(str);
 	close(a);
 }
