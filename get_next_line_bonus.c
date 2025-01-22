@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aboukent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 08:53:54 by aboukent          #+#    #+#             */
-/*   Updated: 2025/01/16 18:02:46 by aboukent         ###   ########.fr       */
+/*   Created: 2025/01/20 16:31:59 by aboukent          #+#    #+#             */
+/*   Updated: 2025/01/20 16:32:02 by aboukent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <stdio.h>
+#include "get_next_line_bonus.h"
+
 char	*before_nl(char *line)
 {
 	int		i;
@@ -46,7 +46,7 @@ char	*after_nl(char *line)
 	}
 	i = 0;
 	j = ft_strlen(line);
-	while (line[i] && line[i] != '\n')
+	while (line [i] && line[i] != '\n')
 		i++;
 	if (line[i] == '\n')
 	{
@@ -87,13 +87,13 @@ char	*get_read(int fd, char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer[1024];
 	char		*line;
 
 	if (BUFFER_SIZE <= 0 && fd < 0)
 		return (NULL);
-	buffer = get_read(fd, buffer);
-	line = before_nl(buffer);
-	buffer = after_nl(buffer);
+	buffer[fd] = get_read(fd, buffer[fd]);
+	line = before_nl(buffer[fd]);
+	buffer[fd] = after_nl(buffer[fd]);
 	return (line);
 }
