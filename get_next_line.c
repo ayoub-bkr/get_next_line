@@ -11,49 +11,49 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-char	*before_nl(char *line)
+
+char	*before_nl(char *buffer)
 {
 	int		i;
-	char	*returned_line;
+	char	*line;
 
 	i = 0;
-	if (!line)
+	if (!buffer)
 	{
-		free(line);
+		free(buffer);
 		return (NULL);
 	}
-	while (line[i] && line[i] != '\n')
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	if (line[i] == '\n')
-		returned_line = ft_substr(line, 0, i + 1);
+	if (buffer[i] == '\n')
+		line = ft_substr(buffer, 0, i + 1);
 	else
-		returned_line = line;
-	return (returned_line);
+		line = buffer;
+	return (line);
 }
 
-char	*after_nl(char *line)
+char	*after_nl(char *buffer)
 {
 	int		i;
 	int		j;
-	char	*returned_line;
+	char	*line;
 
-	returned_line = NULL;
-	if (!line)
+	line = NULL;
+	if (!buffer)
 	{
-		free(line);
+		free(buffer);
 		return (NULL);
 	}
 	i = 0;
-	j = ft_strlen(line);
-	while (line[i] && line[i] != '\n')
+	j = ft_strlen(buffer);
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	if (line[i] == '\n')
+	if (buffer[i] == '\n')
 	{
-		returned_line = ft_substr(line, i + 1, j - i);
-		free(line);
+		line = ft_substr(buffer, i + 1, j - i);
+		free(buffer);
 	}
-	return (returned_line);
+	return (line);
 }
 
 char	*get_read(int fd, char *buffer)
@@ -90,7 +90,7 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*line;
 
-	if (BUFFER_SIZE <= 0 && fd < 0)
+	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
 	buffer = get_read(fd, buffer);
 	line = before_nl(buffer);
